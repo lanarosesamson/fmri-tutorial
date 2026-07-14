@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 4 — Understand BIDS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="topbar">
+    <div class="brand">
+      <div class="brand-icon">&gt;_</div>
+      <a href="index.html" class="brand-name">fMRI Tutorial</a>
+    </div>
+
+    <div class="topnav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#tutorial-overview">Steps</a>
+      <a href="step1.html">Start</a>
+    </div>
+  </nav>
+
+  <main class="step-layout">
+
+<aside class="step-sidebar">
+  <h3>Tutorial steps</h3>
+
+  <a href="step1.html"><span>1</span> Understand the experiment</a>
+  <a href="step2.html"><span>2</span> fMRI and BOLD basics</a>
+  <a href="step3.html"><span>3</span> Ubuntu and terminal basics</a>
+  <a href="step4.html" class="current"><span>4</span> Understand BIDS</a>
+  <a href="step5.html"><span>5</span> Download the dataset</a>
+  <a href="step6.html"><span>6</span> Run fMRIPrep</a>
+  <a href="step7.html"><span>7</span> Identify subject files</a>
+  <a href="step8.html"><span>8</span> Inspect events.tsv</a>
+  <a href="step9.html"><span>9</span> Create EV files</a>
+  <a href="step10.html"><span>10</span> Inspect confounds.tsv</a>
+  <a href="step11.html"><span>11</span> Prepare confounds for FEAT</a>
+  <a href="step12.html"><span>12</span> Run FEAT</a>
+  <a href="step13.html"><span>13</span> View FEAT outputs</a>
+  <a href="step14.html"><span>14</span> Automate the pipeline</a>
+  <a href="step15.html"><span>15</span> Group analysis</a>
+  <a href="step16.html"><span>16</span> Interpret results</a>
+</aside>
+    <section class="step-main">
+
+      <!-- HERO -->
+      <section class="step4-hero">
+        <div class="step4-hero-text">
+          <a class="step-back-link" href="index.html#tutorial-overview">← Back to steps</a>
+
+          <h1>Step 4 — Understand BIDS</h1>
+
+          <p class="step4-lead">
+            Before locating the files we need, we must understand how the dataset is organised.
+          </p>
+        </div>
+
+        <div class="step4-hero-visual">
+          <img src="image/bids-structure.png" alt="Example of BIDS dataset structure">
+        </div>
+      </section>
+
+      <!-- CARD 1 -->
+      <article class="step-card step4-card">
+        <div class="step-card-title">
+          <div class="step-card-number">1</div>
+          <h2>What is BIDS?</h2>
+        </div>
+
+        <div class="step4-card-body">
+          <div class="step4-text-block">
+            <p>
+              BIDS stands for <strong>Brain Imaging Data Structure</strong>.
+            </p>
+            <p>
+              It is a standard way of organising neuroimaging datasets.
+            </p>
+            <p>
+              Instead of storing files in arbitrary folders with arbitrary names, BIDS defines a predictable structure for subjects, sessions, modalities and metadata.
+            </p>
+            <p>
+              This makes datasets easier to read, easier to share and easier to analyse with tools such as fMRIPrep or FSL.
+            </p>
+          </div>
+
+          <div class="step4-mini-note">
+            <div class="step4-mini-note-head">
+              <img src="image/bids-brain-icon.png" alt="BIDS icon">
+              <h3>Key idea</h3>
+            </div>
+            <p>
+              With BIDS, we can predict where files are stored and what information their filenames contain.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 2 -->
+      <article class="step-card step4-card">
+        <div class="step-card-title">
+          <div class="step-card-number">2</div>
+          <h2>Why is BIDS useful?</h2>
+        </div>
+
+        <div class="step4-card-body">
+          <div class="step4-text-block">
+            <p>
+              In practice, BIDS helps us know where to look for the files we need.
+            </p>
+            <p>
+              If a dataset follows the BIDS standard, we can usually predict:
+            </p>
+            <ul>
+              <li>where the anatomical images are stored</li>
+              <li>where the functional runs are stored</li>
+              <li>where the events files are stored</li>
+              <li>how subjects and sessions are named</li>
+            </ul>
+            <p>
+              This is especially useful when working on a multi-subject dataset, because the same structure is repeated across participants.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 3 -->
+      <article class="step-card step4-card">
+        <div class="step-card-title">
+          <div class="step-card-number">3</div>
+          <h2>How is a BIDS dataset organised?</h2>
+        </div>
+
+        <div class="step4-card-body">
+          <div class="step4-text-block">
+            <p>
+              A BIDS dataset is usually organised by subject, and sometimes by session.
+            </p>
+            <p>
+              A typical structure looks like this:
+            </p>
+
+            <pre><code>dataset/
+└── sub-051/
+    └── ses-1/
+        ├── anat/
+        └── func/</code></pre>
+
+            <p>
+              In our dataset, the subject folders follow the same logic, but with longer identifiers such as:
+            </p>
+            <p>
+              <code>sub-108TUSW011051</code>
+            </p>
+            <p>
+              Inside a subject folder, the <code>func/</code> directory contains the functional runs and their associated task files.
+            </p>
+          </div>
+
+          <div class="step4-figure-box">
+            <img src="image/bids-organisation.png" alt="Simple organisation of a BIDS dataset">
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 4 -->
+      <article class="step-card step4-card">
+        <div class="step-card-title">
+          <div class="step-card-number">4</div>
+          <h2>How do BIDS filenames work?</h2>
+        </div>
+
+        <div class="step4-card-body">
+          <div class="step4-text-block">
+            <p>
+              BIDS filenames are built from several pieces of information separated by underscores.
+            </p>
+            <p>
+              For example:
+            </p>
+            <p>
+              <code>sub-108TUSW011051_ses-1_task-execution_acq-Fs2_run-02_events.tsv</code>
+            </p>
+            <p>
+              This filename tells us:
+            </p>
+            <ul>
+              <li><code>sub-108TUSW011051</code> → the subject identifier</li>
+              <li><code>ses-1</code> → the session</li>
+              <li><code>task-execution</code> → the task performed during the run</li>
+              <li><code>acq-Fs2</code> → acquisition label</li>
+              <li><code>run-02</code> → run number 2</li>
+              <li><code>events.tsv</code> → the tab-separated file containing the task events</li>
+            </ul>
+          </div>
+
+          <div class="step4-figure-box">
+            <img src="image/bids-filename-decoder.png" alt="How BIDS filenames are decoded">
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 5 -->
+      <article class="step-card step4-card">
+        <div class="step-card-title">
+          <div class="step-card-number">5</div>
+          <h2>Which BIDS files matter for this tutorial?</h2>
+        </div>
+
+        <div class="step4-card-body">
+          <div class="step4-text-block">
+            <p>
+              During this tutorial, we will learn how to locate the files needed for an fMRI analysis.
+            </p>
+
+            <p>
+              Depending on the analysis step, we will need to find one file at a time:
+            </p>
+
+            <ul>
+              <li>the anatomical <code>T1 image</code> file</li>
+              <li>the functional <code>BOLD image</code> file</li>
+              <li>the corresponding <code>events.tsv</code> file</li>
+            </ul>
+
+            <p>
+              To find any of these files, we always follow the same three steps:
+            </p>
+
+            <ul>
+              <li>identify the correct subject folder</li>
+              <li>identify the correct functional run</li>
+              <li>locate the file associated with that run</li>
+            </ul> 
+          </div>
+
+          <div class="step4-figure-box step4-full-image">
+            <img src="image/bids-path-to-events.png" alt="Path to files in a BIDS dataset">
+          </div>
+        </div>
+      </article>
+
+      <!-- PROGRESS -->
+      <div class="step-progress">
+        <a href="step1.html">1</a>
+        <span></span>
+        <a href="step3.html">3</a>
+        <span></span>
+        <a href="step4.html" class="active">4</a>
+        <span></span>
+        <a href="step5.html">5</a>
+        <span></span>
+        <a href="step16.html">16</a>
+      </div>
+
+      <div class="step-page-nav">
+        <a class="step-nav-btn secondary" href="step3.html">← Previous Step</a>
+        <a class="step-nav-btn primary" href="step5.html">Next Step →</a>
+      </div>
+
+    </section>
+  </main>
+
+</body>
+</html>

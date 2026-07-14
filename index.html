@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>fMRI Tutorial</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <a href="index.html" class="brand">
+      <span class="brand-icon">&gt;_</span>
+      <span>fMRI Tutorial</span>
+    </a>
+
+    <nav class="topnav">
+      <a href="index.html">Home</a>
+      <a href="#steps">Steps</a>
+      <a href="step1.html">Start</a>
+    </nav>
+  </header>
+
+  <main class="page">
+
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Step-by-step fMRI Analysis tutorial</h1>
+        <p>A step-by-step guide to analysing a motor fMRI dataset with FSL.</p>
+        <p>This website is a practical tutorial for beginners.</p>
+        <p>It explains how to analyse a simple motor fMRI experiment using FSL.</p>
+        <p>The tutorial follows a real pipeline, from one subject to a group analysis.</p>
+
+        <div class="hero-buttons">
+          <a href="step1.html" class="btn primary">Start the tutorial →</a>
+          <a href="#steps" class="btn secondary">View all steps</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <img src="image/hero-neuro.png" alt="Computer and brain illustration">
+      </div>
+    </section>
+
+    <section class="intro-card">
+      <h2>What is this tutorial about?</h2>
+      <p>We will analyse a motor fMRI task based on hand movements.</p>
+      <ul>
+      <li>understand the experiment</li>
+    <li>understand fMRI and the BOLD signal</li>
+    <li>work with BIDS datasets</li>
+    <li>run fMRIPrep</li>
+    <li>create EV files</li>
+    <li>prepare confounds for FEAT</li>
+    <li>run a first-level FEAT analysis</li>
+    <li>view the results in FSLeyes</li>
+    <li>automate the analysis pipeline</li>
+    <li>perform a group analysis</li>
+    <li>interpret brain activations</li>
+      </ul>
+    </section>
+
+    <section class="intro-card">
+      <h2>What do you need before starting?</h2>
+      <ul>
+        <li>Ubuntu access</li>
+        <li>FSL installed</li>
+      </ul>
+    </section>
+
+    <section class="steps-section" id="steps">
+      <div class="section-title">
+        <span class="section-icon">≡</span>
+        <h2>Tutorial overview</h2>
+      </div>
+
+      <p>Each step focuses on one part of the workflow, from understanding the experiment to interpreting group-level results.</p>
+  
+ 
+      <div class="steps-grid">
+  <a href="step1.html" class="step-card"><span class="step-number">1</span><h3>Understand the experiment</h3><p>Study design, task and focus.</p><span class="arrow">→</span></a>
+  <a href="step2.html" class="step-card"><span class="step-number">2</span><h3>fMRI and BOLD basics</h3><p>Understand what fMRI measures.</p><span class="arrow">→</span></a>
+  <a href="step3.html" class="step-card"><span class="step-number">3</span><h3>Ubuntu and terminal basics</h3><p>Paths, folders and commands.</p><span class="arrow">→</span></a>
+  <a href="step4.html" class="step-card"><span class="step-number">4</span><h3>Understand BIDS</h3><p>Understand dataset organisation.</p><span class="arrow">→</span></a>
+  <a href="step5.html" class="step-card"><span class="step-number">5</span><h3>Download the dataset</h3><p>Find and organise the data.</p><span class="arrow">→</span></a>
+
+  <a href="step6.html" class="step-card"><span class="step-number">6</span><h3>Run fMRIPrep</h3><p>Preprocess the MRI data.</p><span class="arrow">→</span></a>
+  <a href="step7.html" class="step-card"><span class="step-number">7</span><h3>Identify subject files</h3><p>Find events and BOLD files.</p><span class="arrow">→</span></a>
+  <a href="step8.html" class="step-card"><span class="step-number">8</span><h3>Inspect events.tsv</h3><p>Onsets, durations and trial types.</p><span class="arrow">→</span></a>
+  <a href="step9.html" class="step-card"><span class="step-number">9</span><h3>Create EV files</h3><p>Build regressors for FEAT.</p><span class="arrow">→</span></a>
+  <a href="step10.html" class="step-card"><span class="step-number">10</span><h3>Inspect confounds.tsv</h3><p>Explore nuisance regressors.</p><span class="arrow">→</span></a>
+
+  <a href="step11.html" class="step-card"><span class="step-number">11</span><h3>Prepare confounds for FEAT</h3><p>Select and format confounds.</p><span class="arrow">→</span></a>
+  <a href="step12.html" class="step-card"><span class="step-number">12</span><h3>Run FEAT</h3><p>Run the first-level model.</p><span class="arrow">→</span></a>
+  <a href="step13.html" class="step-card"><span class="step-number">13</span><h3>View FEAT outputs</h3><p>Inspect statistical maps.</p><span class="arrow">→</span></a>
+  <a href="step14.html" class="step-card"><span class="step-number">14</span><h3>Automate the pipeline</h3><p>Use Bash scripts.</p><span class="arrow">→</span></a>
+  <a href="step15.html" class="step-card"><span class="step-number">15</span><h3>Group analysis</h3><p>Move to cohort-level results.</p><span class="arrow">→</span></a>
+
+  <a href="step16.html" class="step-card"><span class="step-number">16</span><h3>Interpret results</h3><p>Identify brain regions and explain activations.</p><span class="arrow">→</span></a>
+</div>
+
+    </section>
+
+    <section class="cta">
+      <div>
+        <h2>Ready to start?</h2> 
+      </div>
+      <a href="step1.html" class="btn primary">Go to Step 1 →</a>
+    </section>
+
+  </main>
+</body>
+</html>

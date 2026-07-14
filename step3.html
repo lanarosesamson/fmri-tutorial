@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 3 — Ubuntu and terminal basics</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="topbar">
+    <div class="brand">
+      <div class="brand-icon">&gt;_</div>
+      <a href="index.html" class="brand-name">fMRI Tutorial</a>
+    </div>
+
+    <div class="topnav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#steps" class="active">Steps</a>
+      <a href="step1.html">Start</a>
+    </div>
+  </nav>
+
+  <main class="step-layout">
+
+<aside class="step-sidebar">
+  <h3>Tutorial steps</h3>
+
+  <a href="step1.html"><span>1</span> Understand the experiment</a>
+  <a href="step2.html"><span>2</span> fMRI and BOLD basics</a>
+  <a href="step3.html" class="current"><span>3</span> Ubuntu and terminal basics</a>
+  <a href="step4.html"><span>4</span> Understand BIDS</a>
+  <a href="step5.html"><span>5</span> Download the dataset</a>
+  <a href="step6.html"><span>6</span> Run fMRIPrep</a>
+  <a href="step7.html"><span>7</span> Identify subject files</a>
+  <a href="step8.html"><span>8</span> Inspect events.tsv</a>
+  <a href="step9.html"><span>9</span> Create EV files</a>
+  <a href="step10.html"><span>10</span> Inspect confounds.tsv</a>
+  <a href="step11.html"><span>11</span> Prepare confounds for FEAT</a>
+  <a href="step12.html"><span>12</span> Run FEAT</a>
+  <a href="step13.html"><span>13</span> View FEAT outputs</a>
+  <a href="step14.html"><span>14</span> Automate the pipeline</a>
+  <a href="step15.html"><span>15</span> Group analysis</a>
+  <a href="step16.html"><span>16</span> Interpret results</a>
+</aside>
+    <section class="step-main">
+
+      <section class="step3-hero">
+        <div>
+          <a class="step-back-link" href="index.html#steps">← Back to steps</a>
+
+          <h1>Step 3 — Ubuntu and terminal basics</h1>
+
+          <p>
+            Before working with the dataset, we need to know how to navigate folders, read file paths and find the files used in the analysis.
+          </p>
+     <p class="skip-note">
+    If you are already familiar with Linux, you can
+    <a href="step4.html">skip this step</a>.
+</p>
+
+	</div>
+
+        <div class="terminal-card">
+          <div class="terminal-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <pre><code>lsamson@ubuntu:~$ pwd
+/home/lsamson/project_folder
+
+lsamson@ubuntu:~$ ls
+bids   scripts   results   README.md
+
+lsamson@ubuntu:~$ mkdir new_folder
+lsamson@ubuntu:~$ touch notes.txt
+lsamson@ubuntu:~$ vim notes.txt
+
+lsamson@ubuntu:~$ cd bids/
+
+lsamson@ubuntu:~/project_folder/bids$ find . -name "*events.tsv"
+./sub-108TUSW011051/ses-1/func/sub-108TUSW011051_ses-1_task-execution_run-02_events.tsv</code></pre>
+        </div>
+      </section>
+
+      <section class="step3-top-stack">
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">▣</div>
+            <h2>Why do we need Ubuntu and the terminal?</h2>
+          </div>
+
+          <p>In this tutorial, most of the analysis is performed in FSL, but the terminal is still essential.</p>
+          <p>We will use it to move through the project folders, inspect files, create regressors and find the correct BOLD and confounds files.</p>
+          <p>Being able to read paths and navigate the dataset is therefore a basic but necessary skill for the rest of the pipeline.</p>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">▣</div>
+            <h2>What is a path?</h2>
+          </div>
+
+         <section>
+  <h2>What is a path?</h2>
+
+  <p>
+    A <strong>path</strong> describes the location of a file or directory in the file system.
+  </p>
+
+  <p>
+    When the path points to a file, it includes both the directory and the filename.
+  </p>
+
+  <p>
+    For example:
+  </p>
+
+  <p>
+    <code>/home/lsamson/project_folder/step3.html</code>
+  </p>
+
+  <p>
+    Here, <code>/home/lsamson/project_folder/</code> is the directory, and <code>step3.html</code> is the filename.
+  </p>
+
+  <p>
+    Together, they form the complete file path.
+  </p>
+</section> 
+	</article>
+
+       <section class="step-card">
+  <div class="card-title-row">
+    <div class="card-icon">↔</div>
+    <h2>Absolute path vs relative path</h2>
+  </div>
+
+  <div class="path-comparison-grid">
+
+    <div class="path-comparison-card">
+      <h3>Absolute path</h3>
+
+      <p>
+        An <strong>absolute path</strong> starts from the root of the file system
+        and gives the complete location of a file or directory.
+      </p>
+
+      <p><strong>Example:</strong></p>
+
+      <p>
+        <code>/home/lsamson/project_folder/data/events.tsv</code>
+      </p>
+    </div>
+
+    <div class="path-comparison-card">
+      <h3>Relative path</h3>
+
+      <p>
+        A <strong>relative path</strong> starts from the current directory
+        instead of the root of the file system.
+      </p>
+
+      <p>
+        The <code>./</code> means "start from the current directory".
+      </p>
+
+      <p><strong>Example:</strong></p>
+
+      <p>
+        <code>./data/events.tsv</code>
+      </p>
+    </div>
+
+  </div>
+
+  <p>
+    Both can point to the same file, but they start from different locations.
+  </p>
+</section>
+       
+
+      <section class="step3-card command-section">
+        <div class="card-title-row">
+          <div class="card-icon">▣</div>
+          <h2>Core terminal commands</h2>
+        </div>
+
+        <table class="command-table">
+          <thead>
+            <tr>
+              <th>Command</th>
+              <th>Question</th>
+              <th>Example</th>
+              <th>What it does</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td><code>pwd</code></td>
+              <td>How do I know where I am?</td>
+              <td><code>pwd</code></td>
+              <td>
+                <code>pwd</code> stands for <strong>print working directory</strong>. It displays the full path of your current location in the terminal.
+              </td>
+            </tr>
+
+            <tr>
+              <td><code>ls</code></td>
+              <td>How do I see what is inside a folder?</td>
+              <td><code>ls</code></td>
+              <td>
+                It lists the files and folders contained in the current directory. This is useful to inspect the content of your project folder or to check whether a file is present.
+              </td>
+            </tr>
+
+            <tr>
+              <td><code>cd</code></td>
+              <td>How do I move into another folder?</td>
+              <td><code>cd folder_name</code></td>
+              <td>
+                <code>cd</code> stands for <strong>change directory</strong>. For example, if you are in your home folder and want to move into the tutorial folder, you can type: <code>cd project_folder</code>.
+              </td>
+            </tr>
+
+            <tr>
+              <td><code>mkdir</code></td>
+              <td>How do I create a new folder?</td>
+              <td><code>mkdir new_folder</code></td>
+              <td>
+                <code>mkdir</code> creates a new folder. For example, <code>mkdir results</code> creates a folder called <code>results</code> in your current directory.
+              </td>
+            </tr>
+
+            <tr>
+              <td><code>touch</code></td>
+              <td>How do I create a new file?</td>
+              <td><code>touch notes.txt</code></td>
+              <td>
+                <code>touch</code> creates a new empty file. For example, <code>touch design.fsf</code> creates a new file called <code>design.fsf</code>.
+              </td>
+            </tr>
+
+            <tr>
+              <td><code>vim</code></td>
+              <td>How do I open a file and write inside it?</td>
+              <td><code>vim notes.txt</code></td>
+              <td>
+                <code>vim</code> opens a file in the terminal editor. Once the file is open, press <code>i</code> to enter insert mode and start writing inside the file.
+              </td>
+            </tr>
+
+            <tr>
+              <td><code>:wq</code></td>
+              <td>How do I save and quit in Vim?</td>
+              <td><code>:wq</code></td>
+              <td>
+                In Vim, press <code>Esc</code> first, then type <code>:wq</code> and press Enter. This saves the file and closes Vim.
+              </td>
+            </tr>
+
+            <tr>
+              <td><code>find</code></td>
+              <td>How do I find a specific file?</td>
+              <td><code>find . -name "*events.tsv"</code></td>
+              <td>
+                This command searches for files or folders inside a given location. The dot <code>.</code> means “search from the current folder”.
+              </td>
+            </tr>
+
+            <tr>
+              <td><code>cat</code></td>
+              <td>How do I quickly look at the content of a text file?</td>
+              <td><code>cat filename</code></td>
+              <td>
+                For example: <code>cat sub-108TUSW011051_ses-1_task-execution_acq-Fs2_run-02_events.tsv</code>. This prints the content of the file directly in the terminal.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="step3-card">
+        <div class="card-title-row">
+          <div class="card-icon">★</div>
+          <h2>Why are these commands important for this tutorial?</h2>
+        </div>
+
+        <p>In the next steps, we will use them to locate and inspect several key files:</p>
+
+        <div class="important-grid">
+          <div>
+            <strong>the <code>events.tsv</code> file</strong>
+            <p>used to build the EVs</p>
+          </div>
+
+          <div>
+            <strong>the preprocessed BOLD file</strong>
+            <p>used in FEAT</p>
+          </div>
+
+          <div>
+            <strong>the confounds file</strong>
+            <p>produced by fMRIPrep</p>
+          </div>
+
+          <div>
+            <strong>the output folders</strong>
+            <p>created by FEAT</p>
+          </div>
+        </div>
+
+        <p>Understanding how to navigate the project structure will make the rest of the workflow much easier.</p>
+      </section>
+
+      <div class="step-progress">
+        <a href="step1.html">1</a>
+        <span></span>
+        <a href="step2.html">2</a>
+        <span></span>
+        <a href="step3.html" class="active">3</a>
+        <span></span>
+	<a href="step4.html">4</a>
+        <span></span>
+        <a href="step16.html">16</a>
+      </div>
+
+      <div class="step-page-nav">
+        <a class="step-nav-btn secondary" href="step2.html">← Previous Step</a>
+        <a class="step-nav-btn primary" href="step4.html">Next Step →</a>
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>

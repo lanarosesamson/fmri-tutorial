@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 5 — Find and download the dataset</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="topbar">
+    <div class="brand">
+      <div class="brand-icon">&gt;_</div>
+      <a href="index.html" class="brand-name">fMRI Tutorial</a>
+    </div>
+
+    <div class="topnav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#tutorial-overview">Steps</a>
+      <a href="step1.html">Start</a>
+    </div>
+  </nav>
+
+  <main class="step-layout">
+
+<aside class="step-sidebar">
+  <h3>Tutorial steps</h3>
+
+  <a href="step1.html"><span>1</span> Understand the experiment</a>
+  <a href="step2.html"><span>2</span> fMRI and BOLD basics</a>
+  <a href="step3.html"><span>3</span> Ubuntu and terminal basics</a>
+  <a href="step4.html"><span>4</span> Understand BIDS</a>
+  <a href="step5.html" class="current"><span>5</span> Download the dataset</a>
+  <a href="step6.html"><span>6</span> Run fMRIPrep</a>
+  <a href="step7.html"><span>7</span> Identify subject files</a>
+  <a href="step8.html"><span>8</span> Inspect events.tsv</a>
+  <a href="step9.html"><span>9</span> Create EV files</a>
+  <a href="step10.html"><span>10</span> Inspect confounds.tsv</a>
+  <a href="step11.html"><span>11</span> Prepare confounds for FEAT</a>
+  <a href="step12.html"><span>12</span> Run FEAT</a>
+  <a href="step13.html"><span>13</span> View FEAT outputs</a>
+  <a href="step14.html"><span>14</span> Automate the pipeline</a>
+  <a href="step15.html"><span>15</span> Group analysis</a>
+  <a href="step16.html"><span>16</span> Interpret results</a>
+</aside>
+    <section class="step-main">
+
+      <section class="step5-hero">
+        <div>
+          <a class="step-back-link" href="index.html#tutorial-overview">← Back to steps</a>
+
+          <h1>Step 5 — Find and download the dataset</h1>
+
+          <p>
+            Before starting the analysis, we need to know where the dataset comes from, how to download it and how to organise it locally.
+          </p>
+        </div>
+
+        <div class="dataset-summary-card">
+          <h2>OpenNeuro</h2>
+          <p>Public platform for neuroimaging datasets</p>
+
+          <div class="dataset-row">
+            <span>Dataset</span>
+            <strong>ds003612</strong>
+          </div>
+
+          <div class="dataset-row">
+            <span>Version used</span>
+            <strong>1.0.5</strong>
+          </div>
+
+          <div class="dataset-row">
+            <span>Modality</span>
+            <strong>MRI</strong>
+          </div>
+
+          <div class="fake-download-btn">Download dataset</div>
+        </div>
+      </section>
+
+      <section class="step5-stack">
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">1</div>
+            <h2>Where does the dataset come from?</h2>
+          </div>
+
+          <p>
+            The dataset used in this tutorial comes from <strong>OpenNeuro</strong>, a public platform that hosts openly shared neuroimaging datasets.
+          </p>
+          <p>
+            The study used here is:
+          </p>
+          <p>
+            <strong>The impact of handedness on the neural correlates during kinesthetic motor imagery: a FMRI study</strong>
+          </p>
+          <p>
+            Its OpenNeuro accession number is:
+          </p>
+          <p>
+            <code>ds003612</code>
+          </p>
+
+          <div class="step5-image-box">
+            <img src="image/openneuro-dataset-page.png" alt="OpenNeuro dataset page for ds003612">
+            <p>Real OpenNeuro dataset page for <code>ds003612</code>.</p>
+          </div>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">2</div>
+            <h2>Why is the dataset version important?</h2>
+          </div>
+
+          <p>
+            On OpenNeuro, datasets can have several versions.
+          </p>
+          <p>
+            In this tutorial, the version used is:
+          </p>
+          <p>
+            <code>1.0.5</code>
+          </p>
+          <p>
+            Mentioning the version is important for reproducibility, because file content or organisation may change between versions.
+          </p>
+
+          <div class="version-flow">
+            <div>1.0.3</div>
+            <span>→</span>
+            <div>1.0.4</div>
+            <span>→</span>
+            <div class="current-version">1.0.5<br><small>used here</small></div>
+          </div>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">3</div>
+            <h2>How can you download the dataset?</h2>
+          </div>
+
+          <p>
+            Open the dataset page on OpenNeuro and go to the <strong>Download</strong> tab.
+          </p>
+          <p>
+            The simplest option is to use the browser download.
+          </p>
+	  <p>
+  You can also access the dataset directly here:
+  <a href="https://openneuro.org/datasets/ds003612/versions/1.0.5/download"
+     target="_blank"
+     class="step-link">OpenNeuro dataset download page</a>.
+</p>
+          <p>
+            OpenNeuro will ask you to choose a local directory where the dataset will be saved.
+          </p>
+          <p>
+            Once the download starts, leave the page open until it is complete.
+          </p>
+
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">4</div>
+            <h2>How should you organise the project locally?</h2>
+          </div>
+
+          <p>
+            It is important to keep a clean and stable folder structure from the beginning.
+          </p>
+          <p>
+            In this tutorial, we recommend creating a dedicated project folder and separating the raw BIDS dataset from the preprocessing outputs.
+          </p>
+          <p>
+            For example:
+          </p>
+
+          <pre><code>fMRI_tutorial_project/
+├── bids/
+└── derivatives/</code></pre>
+
+          <p>
+            The raw BIDS dataset can be stored in <code>bids/</code>.
+          </p>
+          <p>
+            The outputs generated later by preprocessing tools such as fMRIPrep can be stored in <code>derivatives/</code>.
+          </p>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">5</div>
+            <h2>How can you check that the dataset is correctly downloaded?</h2>
+          </div>
+
+          <p>
+            First, move to the folder where the dataset is stored.
+          </p>
+          <p>
+            For example:
+          </p>
+          <p>
+            <code>cd ~/fMRI_tutorial_project/bids</code>
+          </p>
+          <p>
+            Then use:
+          </p>
+          <p>
+            <code>ls</code>
+          </p>
+          <p>
+            You should see the main BIDS files and the subject folders.
+          </p>
+          <p>
+            You can also use:
+          </p>
+          <p>
+            <code>find . -name "*events.tsv"</code>
+          </p>
+          <p>
+            to check that the task event files are present in the dataset.
+          </p>
+
+          <div class="terminal-card step5-terminal">
+            <div class="terminal-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <pre><code>lsamson@ubuntu:~$ cd ~/fMRI_tutorial_project/bids
+
+lsamson@ubuntu:~/fMRI_tutorial_project/bids$ ls
+dataset_description.json  participants.tsv  README  sub-108TUSW011051  sub-108TUSW011052
+
+lsamson@ubuntu:~/fMRI_tutorial_project/bids$ find . -name "*events.tsv"
+./sub-108TUSW011051/ses-1/func/sub-108TUSW011051_ses-1_task-execution_acq-Fs2_run-02_events.tsv
+./sub-108TUSW011052/ses-1/func/sub-108TUSW011052_ses-1_task-execution_acq-Fs2_run-02_events.tsv</code></pre>
+          </div>
+        </article>
+
+      </section>
+
+      <div class="step-progress">
+        <a href="step1.html">1</a>
+        <span></span>
+        <a href="step4.html">4</a>
+        <span></span>
+        <a href="step5.html" class="active">5</a>
+        <span></span>
+        <a href="step6.html">6</a>
+        <span></span>
+        <a href="step16.html">16</a>
+      </div>
+
+      <div class="step-page-nav">
+        <a class="step-nav-btn secondary" href="step4.html">← Previous Step</a>
+        <a class="step-nav-btn primary" href="step6.html">Next Step →</a>
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>

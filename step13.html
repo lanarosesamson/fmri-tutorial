@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 13 — View FEAT outputs</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="brand">
+    <div class="brand-icon">&gt;_</div>
+    <a href="index.html" class="brand-name">fMRI Tutorial</a>
+  </div>
+
+  <div class="topnav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#tutorial-overview">Steps</a>
+    <a href="step1.html">Start</a>
+  </div>
+</nav>
+
+<main class="step-layout">
+
+  <aside class="step-sidebar">
+    <h3>Tutorial steps</h3>
+
+    <a href="step1.html"><span>1</span> Understand the experiment</a>
+    <a href="step2.html"><span>2</span> fMRI and BOLD basics</a>
+    <a href="step3.html"><span>3</span> Ubuntu and terminal basics</a>
+    <a href="step4.html"><span>4</span> Understand BIDS</a>
+    <a href="step5.html"><span>5</span> Download the dataset</a>
+    <a href="step6.html"><span>6</span> Run fMRIPrep</a>
+    <a href="step7.html"><span>7</span> Identify subject files</a>
+    <a href="step8.html"><span>8</span> Inspect events.tsv</a>
+    <a href="step9.html"><span>9</span> Create EV files</a>
+    <a href="step10.html"><span>10</span> Inspect confounds.tsv</a>
+    <a href="step11.html"><span>11</span> Prepare confounds for FEAT</a>
+    <a href="step12.html"><span>12</span> Run FEAT</a>
+    <a href="step13.html" class="current"><span>13</span> View FEAT outputs</a>
+    <a href="step14.html"><span>14</span> Automate the pipeline</a>
+    <a href="step15.html"><span>15</span> Group analysis</a>
+    <a href="step16.html"><span>16</span> Interpret results</a>
+  </aside>
+
+  <section class="step-main">
+
+    <section class="step10-hero">
+      <div>
+        <a class="step-back-link" href="index.html#tutorial-overview">← Back to steps</a>
+
+        <h1>Step 13 — View FEAT outputs</h1>
+
+        <p>
+          The first-level FEAT analysis is complete. In this step, we check that FEAT worked, locate the statistical maps and open them in FSLeyes.
+        </p>
+      </div>
+
+      <div class="step10-hero-image">
+        <img src="image/feat-results.png" alt="View FEAT outputs in FSLeyes">
+      </div>
+    </section>
+
+    <section class="step10-stack">
+
+      <article class="step3-card">
+        <div class="card-title-row">
+          <div class="card-icon">1</div>
+          <h2>Check that FEAT worked</h2>
+        </div>
+
+        <p>
+          Before opening the results, first check that FEAT created the output folder.
+        </p>
+
+        <pre><code>ls ~/fMRI_tutorial_project/righthanded/bids/derivatives/fsl_output/sub_51/</code></pre>
+
+        <p>
+          If FEAT worked, you should see:
+        </p>
+
+        <pre><code>sub051_right_left_confounds.feat</code></pre>
+
+        <p>
+          Then check that the statistical maps were created:
+        </p>
+
+        <pre><code>ls ~/fMRI_tutorial_project/righthanded/bids/derivatives/fsl_output/sub_51/sub051_right_left_confounds.feat/stats/</code></pre>
+
+        <p>
+          You should see files such as:
+        </p>
+
+        <pre><code>cope1.nii.gz
+cope2.nii.gz
+cope3.nii.gz
+cope4.nii.gz
+cope5.nii.gz
+
+zstat1.nii.gz
+zstat2.nii.gz
+zstat3.nii.gz
+zstat4.nii.gz
+zstat5.nii.gz</code></pre>
+
+        <div class="feat-input-box">
+          <strong>If these files exist, the FEAT analysis completed successfully.</strong>
+        </div>
+      </article>
+ <article class="step3-card">
+        <div class="card-title-row">
+          <div class="card-icon">2</div>
+          <h2>Open the maps in FSLeyes</h2>
+        </div>
+
+        <p>
+          Open FSLeyes:
+        </p>
+
+        <pre><code>fsleyes</code></pre>
+
+        <p>
+          Then use <strong>File → Add from file.
+        </p>
+
+        <p>
+          First load:
+        </p>
+
+        <ul>
+          <li><code>MNI152_T1_2mm_brain.nii.gz</code> as anatomical background</li>
+        </ul>
+
+	 <pre><code>Path:/fsl/data/standard/MNI152_T1_2mm_brain.nii.gz</code></pre>
+
+        <div class="feat-input-box">
+          <strong>The anatomical image is the background. The zstat files are displayed as coloured overlays.</strong>
+        </div>
+
+      </article>
+
+
+      <article class="step3-card">
+        <div class="card-title-row">
+          <div class="card-icon">3</div>
+          <h2>Find the FEAT output folder</h2>
+        </div>
+
+        <p>
+          The FEAT output folder is located here:
+        </p>
+
+        <div class="file-detail-box">
+          <h3>FEAT output folder</h3>
+          <code>~/fMRI_tutorial_project/righthanded/bids/derivatives/fsl_output/sub_51/sub051_right_left_confounds.feat/</code>
+        </div>
+
+        <p>
+          Inside this folder, the most important folder for visualisation is <code>stats/</code>.
+        </p>
+
+        <div class="file-detail-box">
+          <h3>Stats folder</h3>
+          <code>~/fMRI_tutorial_project/righthanded/bids/derivatives/fsl_output/sub_51/sub051_right_left_confounds.feat/stats/</code>
+        </div>
+
+        <div class="figure-block">
+          <img src="image/step13-folder-path.png" alt="FEAT output folder path">
+          <p class="figure-caption">
+            Navigate to the FEAT output folder, then open the <code>stats</code> folder.
+          </p>
+        </div>
+      </article>
+
+      <article class="step3-card">
+        <div class="card-title-row">
+          <div class="card-icon">3</div>
+          <h2>Understand the zstat files</h2>
+        </div>
+
+        <p>
+          Each <code>zstat</code> file corresponds to one contrast defined in FEAT.
+        </p>
+
+        <div class="columns-grid">
+          <div>
+            <strong>zstat1.nii.gz</strong>
+            <span>Right &gt; Left</span>
+          </div>
+
+          <div>
+            <strong>zstat2.nii.gz</strong>
+            <span>Left &gt; Right</span>
+          </div>
+
+          <div>
+            <strong>zstat3.nii.gz</strong>
+            <span>Right &gt; Rest</span>
+          </div>
+
+          <div>
+            <strong>zstat4.nii.gz</strong>
+            <span>Left &gt; Rest</span>
+          </div>
+
+          <div>
+            <strong>zstat5.nii.gz</strong>
+            <span>Both &gt; Rest</span>
+          </div>
+        </div>
+
+        <p>
+          The numbering follows the order of the contrasts created in Step 12.
+        </p>
+      </article>
+
+      <article class="step3-card">
+        <div class="card-title-row">
+          <div class="card-icon">4</div>
+          <h2>Example: zstat1 and zstat2</h2>
+        </div>
+
+        <p>
+          The example below shows two contrasts displayed at the same time.
+        </p>
+
+        <div class="columns-grid">
+          <div>
+            <strong>Blue overlay</strong>
+            <span><code>zstat1</code> = Right &gt; Left</span>
+          </div>
+
+          <div>
+            <strong>Red overlay</strong>
+            <span><code>zstat2</code> = Left &gt; Right</span>
+          </div>
+        </div>
+
+        <p>
+          In this example, blue regions are more active during right-hand movements than left-hand movements.
+        </p>
+
+        <p>
+          Red regions are more active during left-hand movements than right-hand movements.
+        </p>
+
+        <p>
+          Because these two contrasts test opposite comparisons, activations can appear in opposite hemispheres.
+        </p>
+
+        <div class="figure-block">
+          <img src="image/step13-zstat1-zstat2.png" alt="zstat1 and zstat2 in FSLeyes">
+          <p class="figure-caption">
+            Example in FSLeyes: <code>zstat1</code> is displayed in blue and <code>zstat2</code> in red.
+          </p>
+        </div>
+
+        <div class="feat-input-box">
+          <strong>The colours are only display choices in FSLeyes. They do not change the statistical results.</strong>
+        </div>
+      </article>
+
+    </section>
+
+    <div class="step-progress">
+      <a href="step1.html">1</a>
+      <span></span>
+      <a href="step12.html">12</a>
+      <span></span>
+      <a href="step13.html" class="active">13</a>
+      <span></span>
+      <a href="step14.html">14</a>
+      <span></span>
+      <a href="step16.html">16</a>
+    </div>
+
+    <div class="step-page-nav">
+      <a class="step-nav-btn secondary" href="step12.html">← Previous Step</a>
+      <a class="step-nav-btn primary" href="step14.html">Next Step →</a>
+    </div>
+
+  </section>
+</main>
+
+</body>
+</html>

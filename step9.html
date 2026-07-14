@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 9 — Create the EV files</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="topbar">
+    <div class="brand">
+      <div class="brand-icon">&gt;_</div>
+      <a href="index.html" class="brand-name">fMRI Tutorial</a>
+    </div>
+
+    <div class="topnav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#steps" class="active">Steps</a>
+      <a href="step1.html">Start</a>
+    </div>
+  </nav>
+
+  <main class="step-layout">
+ 
+	  <aside class="step-sidebar">
+  <h3>Tutorial steps</h3>
+
+  <a href="step1.html"><span>1</span> Understand the experiment</a>
+  <a href="step2.html"><span>2</span> fMRI and BOLD basics</a>
+  <a href="step3.html"><span>3</span> Ubuntu and terminal basics</a>
+  <a href="step4.html"><span>4</span> Understand BIDS</a>
+  <a href="step5.html"><span>5</span> Download the dataset</a>
+  <a href="step6.html"><span>6</span> Run fMRIPrep</a>
+  <a href="step7.html"><span>7</span> Identify subject files</a>
+  <a href="step8.html"><span>8</span> Inspect events.tsv</a>
+  <a href="step9.html" class="current"><span>9</span> Create EV files</a>
+  <a href="step10.html"><span>10</span> Inspect confounds.tsv</a>
+  <a href="step11.html"><span>11</span> Prepare confounds for FEAT</a>
+  <a href="step12.html"><span>12</span> Run FEAT</a>
+  <a href="step13.html"><span>13</span> View FEAT outputs</a>
+  <a href="step14.html"><span>14</span> Automate the pipeline</a>
+  <a href="step15.html"><span>15</span> Group analysis</a>
+  <a href="step16.html"><span>16</span> Interpret results</a>
+</aside>
+    <section class="step-main">
+
+      <section class="step9-hero">
+        <div>
+          <a class="step-back-link" href="index.html#steps">← Back to steps</a>
+
+          <h1>Step 9 — Create the EV files</h1>
+
+          <p>
+            FEAT needs one explanatory variable file for each condition:
+            <strong>Right</strong>, <strong>Left</strong> and <strong>Both</strong>.
+          </p>
+        </div>
+
+        <div class="step9-hero-image">
+          <img src="image/step9-ev-overview.png" alt="Creating EV files from events.tsv">
+        </div>
+      </section>
+
+      <section class="step9-stack">
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">1</div>
+            <h2>What is an EV?</h2>
+          </div>
+
+          <p>
+            EV stands for <strong>Explanatory Variable</strong>.
+          </p>
+
+          <p>
+            In FEAT, an EV represents one condition of the experiment.
+          </p>
+
+          <p>
+            In this analysis, we create one EV for <strong>Right</strong>, one for <strong>Left</strong> and one for <strong>Both</strong>.
+          </p>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">2</div>
+            <h2>What format does FEAT need?</h2>
+          </div>
+
+          <p>
+            FEAT expects a three-column text file.
+          </p>
+
+          <div class="ev-format-box">
+            <code>onset</code>
+            <code>duration</code>
+            <code>amplitude</code>
+          </div>
+
+          <p>
+            The amplitude is set to <code>1</code> because each event is modelled with the same weight.
+          </p>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">3</div>
+            <h2>Create the Right EV</h2>
+          </div>
+
+          <p>
+            This command keeps only the rows where the condition is <strong>Right</strong>.
+          </p>
+
+          <pre><code>awk '{gsub(/\r/,""); if ($3=="Right") print $1 "\t" $2 "\t1"}' events.tsv &gt; right.txt</code></pre>
+
+          <p>
+            The output file is:
+          </p>
+
+          <p>
+            <code>right.txt</code>
+          </p>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">4</div>
+            <h2>Create the Left EV</h2>
+          </div>
+
+          <p>
+            This command keeps only the rows where the condition is <strong>Left</strong>.
+          </p>
+
+          <pre><code>awk '{gsub(/\r/,""); if ($3=="Left") print $1 "\t" $2 "\t1"}' events.tsv &gt; left.txt</code></pre>
+
+          <p>
+            The output file is:
+          </p>
+
+          <p>
+            <code>left.txt</code>
+          </p>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">5</div>
+            <h2>Create the Both EV</h2>
+          </div>
+
+          <p>
+            This command keeps only the rows where the condition is <strong>Both</strong>.
+          </p>
+
+          <pre><code>awk '{gsub(/\r/,""); if ($3=="Both") print $1 "\t" $2 "\t1"}' events.tsv &gt; both.txt</code></pre>
+
+          <p>
+            The output file is:
+          </p>
+
+          <p>
+            <code>both.txt</code>
+          </p>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">6</div>
+            <h2>Check the files</h2>
+          </div>
+
+          <p>
+            Use <code>cat</code> to check that each EV file contains three columns.
+          </p>
+
+          <pre><code>cat right.txt
+cat left.txt
+cat both.txt</code></pre>
+
+          <p>
+            Each line should contain an <strong>onset</strong>, a <strong>duration</strong> and the value <code>1</code>.
+          </p>
+        </article>
+
+      </section>
+
+      <div class="step-progress">
+        <a href="step1.html">1</a>
+        <span></span>
+        <a href="step8.html">8</a>
+        <span></span>
+        <a href="step9.html" class="active">9</a>
+        <span></span>
+        <a href="step10.html">10</a>
+        <span></span>
+        <a href="step16.html">16</a>
+      </div>
+
+      <div class="step-page-nav">
+        <a class="step-nav-btn secondary" href="step8.html">← Previous Step</a>
+        <a class="step-nav-btn primary" href="step10.html">Next Step →</a>
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>

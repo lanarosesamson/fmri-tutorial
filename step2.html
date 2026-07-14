@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 2 — fMRI and BOLD</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="topbar">
+    <div class="brand">
+      <div class="brand-icon">&gt;_</div>
+      <a href="index.html" class="brand-name">fMRI Tutorial</a>
+    </div>
+
+    <div class="topnav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#steps" class="active">Steps</a>
+      <a href="step1.html">Start</a>
+    </div>
+  </nav>
+
+  <main class="step-layout">
+
+<aside class="step-sidebar">
+  <h3>Tutorial steps</h3>
+
+  <a href="step1.html"><span>1</span> Understand the experiment</a>
+  <a href="step2.html" class="current"><span>2</span> fMRI and BOLD basics</a>
+  <a href="step3.html"><span>3</span> Ubuntu and terminal basics</a>
+  <a href="step4.html"><span>4</span> Understand BIDS</a>
+  <a href="step5.html"><span>5</span> Download the dataset</a>
+  <a href="step6.html"><span>6</span> Run fMRIPrep</a>
+  <a href="step7.html"><span>7</span> Identify subject files</a>
+  <a href="step8.html"><span>8</span> Inspect events.tsv</a>
+  <a href="step9.html"><span>9</span> Create EV files</a>
+  <a href="step10.html"><span>10</span> Inspect confounds.tsv</a>
+  <a href="step11.html"><span>11</span> Prepare confounds for FEAT</a>
+  <a href="step12.html"><span>12</span> Run FEAT</a>
+  <a href="step13.html"><span>13</span> View FEAT outputs</a>
+  <a href="step14.html"><span>14</span> Automate the pipeline</a>
+  <a href="step15.html"><span>15</span> Group analysis</a>
+  <a href="step16.html"><span>16</span> Interpret results</a>
+</aside>
+    <section class="step-main">
+
+      <section class="step2-hero">
+        <div>
+          <a class="step-back-link" href="index.html#steps">← Back to steps</a>
+
+          <h1>Step 2 — Understand fMRI and the BOLD signal</h1>
+
+          <p>
+            Before analysing the dataset, we need to understand what fMRI measures, what the BOLD signal represents, and what information is contained in a functional image.
+          </p>
+        </div>
+
+        <div class="step2-hero-image">
+          <img src="image/bold-schema.png" alt="BOLD signal explanation">
+        </div>
+      </section>
+
+      <section class="step2-stack">
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">1</div>
+            <h2>What is fMRI?</h2>
+          </div>
+
+          <p>
+            fMRI stands for <strong>functional Magnetic Resonance Imaging</strong>.
+          </p>
+          <p>
+            It is a neuroimaging technique used to study changes in brain function over time.
+          </p>
+          <p>
+            In task fMRI, repeated whole-brain images are acquired while a participant performs an experimental task.
+          </p>
+          <p>
+            The goal is to identify which brain regions show signal changes associated with the task conditions.
+          </p>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">2</div>
+            <h2>What does fMRI actually measure?</h2>
+          </div>
+<p>
+  fMRI measures changes in the MRI signal over time.
+</p>
+
+<p>
+  During an fMRI experiment, the scanner repeatedly acquires whole-brain three-dimensional images called <strong>volumes</strong>.
+</p>
+
+<p>
+  Each volume represents the entire brain at a specific moment in time.
+</p>
+
+<p>
+  By comparing successive volumes, we can observe how the MRI signal changes in different parts of the brain throughout the experiment.
+</p>
+
+<p>
+  fMRI does not measure neuronal activity directly.
+</p>
+
+<p>
+  These signal changes are linked to the haemodynamic response that follows neural activity.
+</p>
+
+<p>
+  When neurons become active, they require more oxygen. In response, the brain increases local blood flow and delivers more oxygenated blood to the active region.
+</p>
+
+<p>
+  The resulting changes in blood oxygenation alter the MRI signal, producing the BOLD signal measured by fMRI.
+</p>
+
+<p>
+  The fMRI signal is therefore an indirect measure of neural activity rather than a direct recording of neuronal firing.
+</p>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">3</div>
+            <h2>What is inside a task fMRI file?</h2>
+          </div>
+
+          <p>
+            A task fMRI file is usually a <strong>4D dataset</strong>.
+          </p>
+          <p>
+            The first three dimensions describe space: the x, y and z coordinates of the brain image.
+          </p>
+          <p>
+            The fourth dimension is <strong>time</strong>: it corresponds to the succession of volumes acquired during the run.
+          </p>
+          <p>
+            Each 3D volume is made of many small units called <strong>voxels</strong>.
+          </p>
+          <p>
+	  For each voxel, the BOLD signal changes across the successive volumes. This produces a <strong>voxel-wise time series</strong> that can later be modelled statistically.
+          </p>
+
+          <div class="step2-image-box">
+            <img src="image/voxel-timeseries.png" alt="From 4D fMRI data to voxel-wise time series">
+            <p>
+              A task fMRI file contains successive whole-brain volumes. Each voxel has its own BOLD time series.
+            </p>
+          </div>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">4</div>
+            <h2>What is the HRF?</h2>
+          </div>
+
+          <p>
+            HRF stands for <strong>Haemodynamic Response Function</strong>.
+          </p>
+          <p>
+            It describes the typical shape of the BOLD signal following a brief burst of neural activity.
+          </p>
+          <p>
+            Because the BOLD response is delayed and spread over several seconds, FEAT models the expected signal using the HRF rather than the task timing alone.
+          </p>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">5</div>
+            <h2>What is a task fMRI analysis trying to do?</h2>
+          </div>
+
+          <p>
+            The aim of task fMRI analysis is to test whether variations in the BOLD signal are associated with specific periods of the experiment.
+          </p>
+          <p>
+            In practice, we compare the measured voxel time series with a predicted response based on the task model.
+          </p>
+          <p>
+            If the measured signal matches the predicted response well, this suggests that the voxel is related to the experimental condition.
+          </p>
+
+          <div class="step2-image-box">
+            <img src="image/task-model.png" alt="Task fMRI model">
+            <p>
+              Task timing is transformed into an expected BOLD response using the HRF, then compared with the measured voxel signal.
+            </p>
+          </div>
+
+          <p>
+            In our case, we want to model the signal changes associated with three motor conditions:
+          </p>
+          <ul>
+            <li>right-hand movements</li>
+            <li>left-hand movements</li>
+            <li>both-hand movements</li>
+          </ul>
+          <p>
+            Our main interest is the comparison between <strong>Right</strong> and <strong>Left</strong> movements.
+          </p>
+          <p>
+            The <strong>Both</strong> condition is also included so that we can practise building a complete first-level (subject-level) FEAT model using multiple experimental conditions.
+          </p>
+        </article>
+
+      </section>
+
+      <div class="step-progress">
+        <a href="step1.html">1</a>
+        <span></span>
+        <a href="step2.html" class="active">2</a>
+        <span></span>
+        <a href="step3.html">3</a>
+        <span></span>
+        <a href="step16.html">16</a>
+      </div>
+
+      <div class="step-page-nav">
+        <a class="step-nav-btn secondary" href="step1.html">← Previous Step</a>
+        <a class="step-nav-btn primary" href="step3.html">Next Step →</a>
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 16 — Interpret the results</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <nav class="topbar">
+    <div class="brand">
+      <div class="brand-icon">&gt;_</div>
+      <a href="index.html" class="brand-name">fMRI Tutorial</a>
+    </div>
+
+    <div class="topnav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#tutorial-overview">Steps</a>
+      <a href="step1.html">Start</a>
+    </div>
+  </nav>
+
+  <main class="step-layout">
+
+    <aside class="step-sidebar">
+      <h3>Tutorial steps</h3>
+
+      <a href="step1.html"><span>1</span> Understand the experiment</a>
+      <a href="step2.html"><span>2</span> fMRI and BOLD basics</a>
+      <a href="step3.html"><span>3</span> Ubuntu and terminal basics</a>
+      <a href="step4.html"><span>4</span> Understand BIDS</a>
+      <a href="step5.html"><span>5</span> Download the dataset</a>
+      <a href="step6.html"><span>6</span> Run fMRIPrep</a>
+      <a href="step7.html"><span>7</span> Identify subject files</a>
+      <a href="step8.html"><span>8</span> Inspect events.tsv</a>
+      <a href="step9.html"><span>9</span> Create EV files</a>
+      <a href="step10.html"><span>10</span> Inspect confounds.tsv</a>
+      <a href="step11.html"><span>11</span> Prepare confounds for FEAT</a>
+      <a href="step12.html"><span>12</span> Run FEAT</a>
+      <a href="step13.html"><span>13</span> View FEAT outputs</a>
+      <a href="step14.html"><span>14</span> Automate the pipeline</a>
+      <a href="step15.html"><span>15</span> Group analysis</a>
+      <a href="step16.html" class="current"><span>16</span> Interpret the results</a>
+    </aside>
+
+    <section class="step-main">
+
+      <!-- HERO -->
+      <section class="step10-hero">
+        <div>
+          <a class="step-back-link" href="index.html#tutorial-overview">
+            ← Back to steps
+          </a>
+
+          <h1>Step 16 — Interpret the results</h1>
+
+          <p>
+            In this final step, we explore the group analysis results in
+            FSLeyes, identify the activated brain regions using the
+            Harvard-Oxford atlas, and interpret what these activations tell us
+            about motor function.
+          </p>
+        </div>
+
+        <div class="step10-hero-image">
+          <img
+            src="image/interpret-results.png"
+            alt="Brain activation interpretation in FSLeyes"
+          >
+        </div>
+      </section>
+
+      <section class="step10-stack">
+
+        <!-- CARD 1 -->
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">1</div>
+            <h2>Understand the group result structure</h2>
+          </div>
+
+          <p>
+            The group analysis created in Step 15 is stored inside a
+            <code>.gfeat</code> directory.
+          </p>
+
+          <p>
+            Inside this directory, FEAT creates one
+            <code>cope*.feat</code> folder for each contrast.
+          </p>
+
+          <pre><code>all_movements.gfeat/
+├── cope1.feat/
+├── cope2.feat/
+├── cope3.feat/
+├── cope4.feat/
+└── cope5.feat/</code></pre>
+
+          <p>
+            Each COPE folder contains the group-level statistical results for
+            one contrast.
+          </p>
+
+          <div class="columns-grid">
+            <div>
+              <strong>COPE 1</strong>
+              <span>Right hand &gt; Left hand</span>
+            </div>
+
+            <div>
+              <strong>COPE 2</strong>
+              <span>Left hand &gt; Right hand</span>
+            </div>
+
+            <div>
+              <strong>COPE 3</strong>
+              <span>Right hand</span>
+            </div>
+
+            <div>
+              <strong>COPE 4</strong>
+              <span>Left hand</span>
+            </div>
+
+            <div>
+              <strong>COPE 5</strong>
+              <span>Both hands</span>
+            </div>
+          </div>
+
+          <div class="step2-image-box">
+            <img
+              src="image/group-results-folders.png"
+              alt="Group analysis folder containing five COPE directories"
+            >
+
+            <p>
+              The group analysis folder contains one
+              <code>cope*.feat</code> directory for each contrast.
+            </p>
+          </div>
+
+          <div class="feat-input-box">
+            <strong>
+              One COPE folder = one group-level contrast.
+            </strong>
+          </div>
+        </article>
+
+        <!-- CARD 2 -->
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">2</div>
+            <h2>Open a group result in FSLeyes</h2>
+          </div>
+
+          <p>
+            Open FSLeyes from the terminal:
+          </p>
+
+          <pre><code>fsleyes &amp;</code></pre>
+
+          <p>
+            First, load the MNI anatomical template:
+          </p>
+
+          <pre><code>/fsl/data/standard/MNI152_T1_2mm_brain.nii.gz</code></pre>
+
+          <p>
+            Then open the statistical map from the COPE folder that you want to
+            inspect.
+          </p>
+
+          <p>
+            For example, the unthresholded Z-statistic map for COPE 1 is
+            located inside:
+          </p>
+
+          <pre><code>all_movements.gfeat/cope1.feat/stats/zstat1.nii.gz</code></pre>
+
+          <div class="step2-image-box">
+            <img
+              src="image/cope1-cope2-fsleyes.png"
+              alt="COPE 1 and COPE 2 group results displayed in FSLeyes"
+            >
+
+            <p>
+              <strong>Red–orange clusters:</strong>
+              COPE 1 — <strong>Right hand &gt; Left hand</strong>.
+              These regions show stronger activity during right-hand movement
+              than during left-hand movement.
+            </p>
+
+            <p>
+              <strong>Blue–cyan clusters:</strong>
+              COPE 2 — <strong>Left hand &gt; Right hand</strong>.
+              These regions show stronger activity during left-hand movement
+              than during right-hand movement.
+            </p>
+          </div>
+
+          <div class="feat-input-box">
+            <strong>Important</strong>
+
+            <p>
+              In practice, inspect one COPE at a time. Two maps are displayed
+              together here only to make the opposite lateralisation patterns
+              easier to compare.
+            </p>
+          </div>
+        </article>
+
+        <!-- CARD 3 -->
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">3</div>
+            <h2>Compare COPE 1 and COPE 2</h2>
+          </div>
+
+          <p>
+            COPE 1 and COPE 2 directly compare right-hand and left-hand
+            movements.
+          </p>
+
+          <div class="columns-grid">
+            <div>
+              <strong>COPE 1</strong>
+              <span>
+                Right hand &gt; Left hand<br>
+                Regions showing stronger activity during right-hand movement
+                than during left-hand movement.
+              </span>
+            </div>
+
+            <div>
+              <strong>COPE 2</strong>
+              <span>
+                Left hand &gt; Right hand<br>
+                Regions showing stronger activity during left-hand movement
+                than during right-hand movement.
+              </span>
+            </div>
+          </div>
+
+          <p>
+            These two contrasts highlight opposite lateralisation patterns.
+            The cerebral hemisphere contralateral to the moving hand generally
+            shows stronger motor activity.
+          </p>
+
+          <div class="feat-input-box">
+            <strong>
+              COPE 1 emphasises the left-sided motor response associated with
+              right-hand movement, whereas COPE 2 emphasises the right-sided
+              motor response associated with left-hand movement.
+            </strong>
+          </div>
+        </article>
+
+        <!-- CARD 4 -->
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">4</div>
+            <h2>Explore the remaining contrasts</h2>
+          </div>
+
+          <p>
+            COPE 3, COPE 4 and COPE 5 show the activation associated with each
+            motor condition individually.
+          </p>
+
+          <div class="columns-grid">
+            <div>
+              <strong>COPE 3</strong>
+              <span>
+                Right hand<br>
+                Group activation associated with right-hand movement.
+              </span>
+            </div>
+
+            <div>
+              <strong>COPE 4</strong>
+              <span>
+                Left hand<br>
+                Group activation associated with left-hand movement.
+              </span>
+            </div>
+
+            <div>
+              <strong>COPE 5</strong>
+              <span>
+                Both hands<br>
+                Group activation associated with simultaneous movement of both
+                hands.
+              </span>
+            </div>
+          </div>
+
+          <div class="step2-image-box">
+            <img
+              src="image/cope3-cope4-fsleyes.png"
+              alt="COPE 3 and COPE 4 group results displayed in FSLeyes"
+            >
+
+            <p>
+              <strong>Red–yellow clusters:</strong>
+              COPE 3 — <strong>Right hand</strong>.
+              These clusters represent activity associated with right-hand
+              movement.
+            </p>
+
+            <p>
+              <strong>Blue–green clusters:</strong>
+              COPE 4 — <strong>Left hand</strong>.
+              These clusters represent activity associated with left-hand
+              movement.
+            </p>
+          </div>
+
+          <div class="step2-image-box">
+            <img
+              src="image/cope5-fsleyes.png"
+              alt="COPE 5 group result displayed in FSLeyes"
+            >
+
+            <p>
+              <strong>Blue–green–purple clusters:</strong>
+              COPE 5 — <strong>Both hands</strong>.
+              These clusters show activity associated with simultaneous
+              movement of both hands.
+            </p>
+
+            <p>
+              The different colours within this map represent different
+              Z-statistic values.
+            </p>
+          </div>
+
+          <div class="feat-input-box">
+            <strong>How should the colours be interpreted?</strong>
+
+            <p>
+              The colour map identifies the displayed statistical overlay.
+              Within one overlay, changes in colour and brightness represent
+              differences in statistical intensity.
+            </p>
+          </div>
+        </article>
+
+        <!-- CARD 5 -->
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">5</div>
+            <h2>Use the Harvard-Oxford atlas</h2>
+          </div>
+
+          <p>
+            A statistical map shows <strong>where</strong> significant
+            activations are located, but it does not automatically provide the
+            anatomical name of the activated brain region.
+          </p>
+
+          <p>
+            To identify these regions, FSLeyes includes the
+            <strong>Harvard-Oxford atlas</strong>, which overlays anatomical
+            labels onto the statistical maps.
+          </p>
+
+          <p>
+            To open the Atlas panel in FSLeyes, follow this menu path:
+          </p>
+
+          <pre><code>Settings → Ortho View 1 → Atlas panel</code></pre>
+
+          <p>
+            The Atlas panel appears at the bottom of the FSLeyes window.
+            Open the <strong>Atlas information</strong> tab.
+          </p>
+
+          <p>
+            Enable the atlas you want to query:
+          </p>
+
+          <div class="file-detail-box">
+            <h3>Cortical regions</h3>
+            <code>Harvard-Oxford Cortical Structural Atlas</code>
+
+            <h3>Subcortical regions</h3>
+            <code>Harvard-Oxford Subcortical Structural Atlas</code>
+          </div>
+
+          <p>
+            Use the checkboxes beside the atlas names to display information
+            for the current cursor position. You can also use
+            <strong>Show/Hide</strong> to display the atlas regions as coloured
+            overlays.
+          </p>
+
+          <div class="step2-image-box">
+            <img
+              src="image/harvard-atlas-overview.png"
+              alt="Harvard-Oxford atlas displayed in FSLeyes"
+            >
+
+            <p>
+              In this view, the multicoloured regions represent
+              <strong>anatomical labels from the Harvard-Oxford atlas</strong>.
+            </p>
+
+            <p>
+              Each atlas colour corresponds to a different anatomical brain
+              region. These colours do not represent activation strength and
+              they do not correspond to a particular COPE.
+            </p>
+          </div>
+
+          <p>
+            Move the green crosshair onto an activation cluster.
+            The <strong>Atlas information</strong> panel displays the most
+            likely anatomical regions together with their probabilities.
+          </p>
+
+          <div class="step2-image-box">
+            <img
+              src="image/harvard-atlas-identification.png"
+              alt="Identification of activated regions using the Harvard-Oxford atlas"
+            >
+
+
+            <p>
+              At the selected coordinate, the atlas indicates approximately
+              <strong>48% Postcentral Gyrus</strong> and
+              <strong>25% Precentral Gyrus</strong>.
+            </p>
+          </div>
+
+          <div class="feat-input-box">
+            <strong>Statistical colours versus atlas colours</strong>
+
+            <p>
+              Statistical colours represent Z-statistic values from a COPE.
+              Atlas colours represent anatomical brain regions. They must not
+              be interpreted in the same way.
+            </p>
+          </div>
+        </article>
+
+        <!-- CARD 6 -->
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">6</div>
+            <h2>Which brain regions are activated?</h2>
+          </div>
+
+          <p>
+            Across the five contrasts, the group maps show a distributed
+            sensorimotor network involved in voluntary hand movement.
+          </p>
+
+          <div class="columns-grid">
+            <div>
+              <strong>Precentral Gyrus</strong>
+              <span>
+                Contains the primary motor cortex. It contributes directly to
+                the execution of voluntary hand movements.
+              </span>
+            </div>
+
+            <div>
+              <strong>Postcentral Gyrus</strong>
+              <span>
+                Contains the primary somatosensory cortex. It processes tactile
+                and proprioceptive feedback produced during movement.
+              </span>
+            </div>
+
+            <div>
+              <strong>Supplementary Motor Area</strong>
+              <span>
+                Contributes to motor planning, movement sequences and the
+                coordination of movements involving both hands.
+              </span>
+            </div>
+
+            <div>
+              <strong>Premotor Cortex</strong>
+              <span>
+                Contributes to movement preparation, selection and organisation
+                before execution.
+              </span>
+            </div>
+
+            <div>
+              <strong>Cerebellum</strong>
+              <span>
+                Contributes to movement timing, precision, coordination and
+                error correction.
+              </span>
+            </div>
+
+            <div>
+              <strong>Bilateral Sensorimotor Network</strong>
+              <span>
+                Especially visible in COPE 5, because simultaneous movement of
+                both hands recruits motor and sensory regions in both
+                hemispheres.
+              </span>
+            </div>
+          </div>
+
+          <p>
+            COPE 1 and COPE 2 highlight the relative difference between the
+            right-hand and left-hand conditions.
+          </p>
+
+          <p>
+            COPE 3 and COPE 4 show the broader sensorimotor networks associated
+            with right-hand and left-hand movement individually.
+          </p>
+
+          <p>
+            COPE 5 shows a more bilateral pattern because both hands are moving
+            simultaneously.
+          </p>
+        </article>
+
+        <!-- CARD 7 -->
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">7</div>
+            <h2>Scientific conclusion</h2>
+          </div>
+
+          <p>
+            The group analysis reveals the expected sensorimotor network
+            associated with voluntary hand movement.
+          </p>
+
+          <p>
+            The direct comparisons in COPE 1 and COPE 2 show opposite
+            lateralisation patterns, consistent with the contralateral
+            organisation of the human motor system.
+          </p>
+
+          <p>
+            COPE 3 and COPE 4 show the activation associated with right-hand
+            and left-hand movement individually. Their cortical patterns
+            involve the hemisphere contralateral to the moving hand, together
+            with additional sensorimotor and cerebellar regions.
+          </p>
+
+          <p>
+            COPE 5 shows the activation associated with simultaneous movement
+            of both hands. This condition produces a more bilateral pattern
+            because both sensorimotor systems are recruited.
+          </p>
+
+          <p>
+            The main cortical activations are located around the central
+            sulcus, particularly in the
+            <strong>Precentral Gyrus</strong> and
+            <strong>Postcentral Gyrus</strong>. These regions are respectively
+            associated with motor execution and somatosensory feedback.
+          </p>
+
+          <p>
+            Additional activation in medial motor areas and the cerebellum is
+            consistent with movement planning, coordination, timing and error
+            correction.
+          </p>
+
+          <p>
+            The Harvard-Oxford atlas helps confirm the anatomical locations of
+            the observed clusters and allows the statistical results to be
+            interpreted in a neurobiological context.
+          </p>
+
+          <div class="feat-input-box">
+            <strong>
+              Overall, the observed activation patterns are consistent with
+              the known organisation of the human sensorimotor system and
+              support the validity of the analysis pipeline developed
+              throughout this tutorial.
+            </strong>
+          </div>
+        </article>
+
+      </section>
+
+      <div class="step-progress">
+        <a href="step1.html">1</a>
+        <span></span>
+        <a href="step14.html">14</a>
+        <span></span>
+        <a href="step15.html">15</a>
+        <span></span>
+        <a href="step16.html" class="active">16</a>
+      </div>
+
+      <div class="step-page-nav">
+        <a class="step-nav-btn secondary" href="step15.html">
+          ← Previous Step
+        </a>
+
+        <a class="step-nav-btn primary" href="index.html#tutorial-overview">
+          Back to home →
+        </a>
+      </div>
+
+    </section>
+  </main>
+
+</body>
+</html>

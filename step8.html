@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 8 — Inspect the events.tsv file</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="topbar">
+    <div class="brand">
+      <div class="brand-icon">&gt;_</div>
+      <a href="index.html" class="brand-name">fMRI Tutorial</a>
+    </div>
+
+    <div class="topnav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#steps" class="active">Steps</a>
+      <a href="step1.html">Start</a>
+    </div>
+  </nav>
+
+  <main class="step-layout">
+
+<aside class="step-sidebar">
+  <h3>Tutorial steps</h3>
+
+  <a href="step1.html"><span>1</span> Understand the experiment</a>
+  <a href="step2.html"><span>2</span> fMRI and BOLD basics</a>
+  <a href="step3.html"><span>3</span> Ubuntu and terminal basics</a>
+  <a href="step4.html"><span>4</span> Understand BIDS</a>
+  <a href="step5.html"><span>5</span> Download the dataset</a>
+  <a href="step6.html"><span>6</span> Run fMRIPrep</a>
+  <a href="step7.html"><span>7</span> Identify subject files</a>
+  <a href="step8.html" class="current"><span>8</span> Inspect events.tsv</a>
+  <a href="step9.html"><span>9</span> Create EV files</a>
+  <a href="step10.html"><span>10</span> Inspect confounds.tsv</a>
+  <a href="step11.html"><span>11</span> Prepare confounds for FEAT</a>
+  <a href="step12.html"><span>12</span> Run FEAT</a>
+  <a href="step13.html"><span>13</span> View FEAT outputs</a>
+  <a href="step14.html"><span>14</span> Automate the pipeline</a>
+  <a href="step15.html"><span>15</span> Group analysis</a>
+  <a href="step16.html"><span>16</span> Interpret results</a>
+</aside>
+    <section class="step-main">
+
+      <section class="step8-hero">
+        <div>
+          <a class="step-back-link" href="index.html#steps">← Back to steps</a>
+
+          <h1>Step 8 — Inspect the events.tsv file</h1>
+
+          <p>
+            Before creating the EV files, we need to inspect the events table and understand how the task conditions are described.
+          </p>
+        </div>
+
+        <div class="step8-summary-card">
+          <h2>About this file</h2>
+
+          <div class="summary-row">
+            <span>File</span>
+            <strong>events.tsv</strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Used for</span>
+            <strong>task timing</strong>
+          </div>
+
+          <div class="summary-row">
+            <span>Important columns</span>
+            <strong>onset, duration, trial_type</strong>
+          </div>
+
+          <p>
+            This file describes when each condition occurred during the run.
+          </p>
+        </div>
+      </section>
+
+      <section class="step8-main-card">
+
+        <article class="step8-section step8-intro-section">
+          <div class="card-title-row">
+            <div class="card-icon">1</div>
+            <h2>What is the events.tsv file used for?</h2>
+          </div>
+
+          <div class="step8-two-cols">
+            <div>
+              <p>
+                The <code>events.tsv</code> file describes the timing of the experimental conditions for one functional run.
+              </p>
+
+              <p>
+                In our dataset, it tells us when the subject performed the <strong>Right</strong>, <strong>Left</strong> and <strong>Both</strong> motor conditions during the execution task.
+              </p>
+
+              <p>
+                This information is essential because FEAT needs to know when each condition happened in order to model the BOLD response.
+              </p>
+            </div>
+
+            <div class="events-visual">
+              <div class="file-icon">events.tsv</div>
+              <div class="arrow">→</div>
+              <div class="condition-stack">
+                <span class="right-cond">Right movement</span>
+                <span class="left-cond">Left movement</span>
+                <span class="both-cond">Both hands movement</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="step8-section">
+          <div class="card-title-row">
+            <div class="card-icon">2</div>
+            <h2>How can we open the file?</h2>
+          </div>
+
+          <div class="command-steps">
+            <div class="cmd-step">
+              <span>1</span>
+              <p>Find the file</p>
+              <code>find . -name "*_events.tsv"</code>
+            </div>
+
+            <div class="cmd-step">
+              <span>2</span>
+              <p>Move to the directory</p>
+              <code>cd sub-108TUSW011051/ses-1/func</code>
+            </div>
+
+            <div class="cmd-step">
+              <span>3</span>
+              <p>Display its content</p>
+              <code>cat sub-108TUSW011051_ses-1_task-execution_acq-Fs2_run-02_events.tsv</code>
+            </div>
+          </div>
+        </article>
+
+        <div class="step8-grid">
+
+          <article class="step8-section">
+            <div class="card-title-row">
+              <div class="card-icon">3</div>
+              <h2>Which columns matter?</h2>
+            </div>
+
+            <p>
+              For our first-level model, we mainly need three columns.
+            </p>
+
+            <div class="events-table-box">
+              <table class="events-table">
+                <thead>
+                  <tr>
+                    <th>onset</th>
+                    <th>duration</th>
+                    <th>trial_type</th>
+                    <th>...</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>0.000</td>
+                    <td>20.000</td>
+                    <td>Right</td>
+                    <td>...</td>
+                  </tr>
+                  <tr>
+                    <td>24.000</td>
+                    <td>20.000</td>
+                    <td>Left</td>
+                    <td>...</td>
+                  </tr>
+                  <tr>
+                    <td>48.000</td>
+                    <td>20.000</td>
+                    <td>Both</td>
+                    <td>...</td>
+                  </tr>
+                  <tr>
+                    <td>72.000</td>
+                    <td>20.000</td>
+                    <td>Right</td>
+                    <td>...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="column-notes">
+              <p><strong>onset</strong> — when the event starts</p>
+              <p><strong>duration</strong> — how long it lasts</p>
+              <p><strong>trial_type</strong> — which condition is performed</p>
+            </div>
+          </article>
+
+          <article class="step8-section">
+            <div class="card-title-row">
+              <div class="card-icon">4</div>
+              <h2>How should we read one row?</h2>
+            </div>
+
+            <p>
+              Each row describes one task block.
+            </p>
+
+            <div class="row-reader">
+              <div>
+                <span>onset</span>
+                <strong>24.000</strong>
+              </div>
+
+              <div>
+                <span>duration</span>
+                <strong>20.000</strong>
+              </div>
+
+              <div>
+                <span>trial_type</span>
+                <strong>Left</strong>
+              </div>
+            </div>
+
+            <p>
+              This means that the <strong>Left</strong> condition starts 24 seconds after the beginning of the run and lasts for 20 seconds.
+            </p>
+          </article>
+
+          <article class="step8-section">
+            <div class="card-title-row">
+              <div class="card-icon">5</div>
+              <h2>Why do we need this file?</h2>
+            </div>
+
+            <p>
+              FEAT does not use the BIDS <code>events.tsv</code> file directly.
+            </p>
+
+            <p>
+              We will extract the timing information and create one EV text file for each condition.
+            </p>
+
+            <div class="ev-mini-flow">
+              <div class="file-icon small">events.tsv</div>
+              <div class="arrow">→</div>
+              <div class="ev-stack">
+                <span>Right.txt</span>
+                <span>Left.txt</span>
+                <span>Both.txt</span>
+              </div>
+            </div>
+
+            <p>
+              In the next step, we will transform the events table into these three EV files so that FEAT can model each condition separately.
+            </p>
+          </article>
+
+        </div>
+
+      </section>
+
+      <div class="step-progress">
+        <a href="step1.html">1</a>
+        <span></span>
+        <a href="step7.html">7</a>
+        <span></span>
+        <a href="step8.html" class="active">8</a>
+        <span></span>
+        <a href="step9.html">9</a>
+        <span></span>
+        <a href="step16.html">16</a>
+      </div>
+
+      <div class="step-page-nav">
+        <a class="step-nav-btn secondary" href="step7.html">← Previous Step</a>
+        <a class="step-nav-btn primary" href="step9.html">Next Step →</a>
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>

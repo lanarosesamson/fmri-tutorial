@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 11 — Prepare confounds for FEAT</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="topbar">
+    <div class="brand">
+      <div class="brand-icon">&gt;_</div>
+      <a href="index.html" class="brand-name">fMRI Tutorial</a>
+    </div>
+
+    <div class="topnav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#tutorial-overview">Steps</a>
+      <a href="step1.html">Start</a>
+    </div>
+  </nav>
+
+  <main class="step-layout">
+
+<aside class="step-sidebar">
+  <h3>Tutorial steps</h3>
+
+  <a href="step1.html"><span>1</span> Understand the experiment</a>
+  <a href="step2.html"><span>2</span> fMRI and BOLD basics</a>
+  <a href="step3.html"><span>3</span> Ubuntu and terminal basics</a>
+  <a href="step4.html"><span>4</span> Understand BIDS</a>
+  <a href="step5.html"><span>5</span> Download the dataset</a>
+  <a href="step6.html"><span>6</span> Run fMRIPrep</a>
+  <a href="step7.html"><span>7</span> Identify subject files</a>
+  <a href="step8.html"><span>8</span> Inspect events.tsv</a>
+  <a href="step9.html"><span>9</span> Create EV files</a>
+  <a href="step10.html"><span>10</span> Inspect confounds.tsv</a>
+  <a href="step11.html" class="current"><span>11</span> Prepare confounds for FEAT</a>
+  <a href="step12.html"><span>12</span> Run FEAT</a>
+  <a href="step13.html"><span>13</span> View FEAT outputs</a>
+  <a href="step14.html"><span>14</span> Automate the pipeline</a>
+  <a href="step15.html"><span>15</span> Group analysis</a>
+  <a href="step16.html"><span>16</span> Interpret results</a>
+</aside>
+    <section class="step-main">
+
+      <section class="step10-hero">
+        <div>
+          <a class="step-back-link" href="index.html#tutorial-overview">← Back to steps</a>
+
+          <h1>Step 11 — Prepare confounds for FEAT</h1>
+
+          <p>
+            We now create a smaller confounds file containing only the nuisance regressors we want to include in FEAT.
+          </p>
+        </div>
+
+        <div class="step10-hero-image">
+          <img src="image/image-prepare-confounds.png" alt="Prepare selected confounds for FEAT">
+        </div>
+      </section>
+
+      <section class="step10-stack">
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">1</div>
+            <h2>Why create a smaller confounds file?</h2>
+          </div>
+
+          <p>
+            The original fMRIPrep confounds file contains many columns.
+          </p>
+
+          <p>
+            FEAT does not need all of them for this tutorial.
+          </p>
+<p>
+  To use a consistent nuisance-regression strategy across all subjects,
+  we create a smaller file containing only the confounds selected for this analysis.
+</p>
+        </article>
+
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">&gt;_</div>
+            <h2>Create the selected confounds file</h2>
+          </div>
+
+          <p>
+            From the folder containing the confounds file, run:
+          </p>
+
+<pre><code>python3 - &lt;&lt;'PY'
+import pandas as pd
+
+confounds = pd.read_csv(
+    "sub-108TUSW011051_ses-1_task-execution_acq-Fs2_run-02_desc-confounds_timeseries.tsv",
+    sep="\t"
+)
+
+# Six rigid-body motion parameters and their temporal derivatives
+base_cols = [
+    "trans_x", "trans_y", "trans_z",
+    "rot_x", "rot_y", "rot_z",
+    "trans_x_derivative1",
+    "trans_y_derivative1",
+    "trans_z_derivative1",
+    "rot_x_derivative1",
+    "rot_y_derivative1",
+    "rot_z_derivative1"
+]
+
+# First 13 anatomical CompCor components
+acompcor_cols = [
+    f"a_comp_cor_{i:02d}"
+    for i in range(13)
+]
+# Individual regressors for volumes identified as motion outliers
+motion_outlier_cols = [
+    column
+    for column in confounds.columns
+    if column.startswith("motion_outlier")
+]
+
+selected_cols = base_cols + acompcor_cols + motion_outlier_cols
+
+
+selected = confounds[selected_cols].fillna(0)
+
+selected.to_csv(
+    "confounds.txt",
+    sep="\t",
+    index=False,
+    header=False
+)
+
+print("Created confounds.txt")
+print(f"Number of volumes: {selected.shape[0]}")
+print(f"Number of confound regressors: {selected.shape[1]}")
+print(f"aCompCor components: {len(acompcor_cols)}")
+print(f"Motion-outlier regressors: {len(motion_outlier_cols)}")
+PY</code></pre>
+          <p>
+            This creates a new file called:
+          </p>
+
+          <p>
+            <code>confounds.txt</code>
+          </p>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">3</div>
+            <h2>Check the output file</h2>
+          </div>
+
+          <p>
+            Use <code>head</code> to check the first lines:
+          </p>
+
+          <pre><code>head confounds.txt</code></pre>
+
+          <p>
+            The file should contain numerical values only.
+          </p>
+
+          <p>
+            It should not contain column names, because FEAT expects a plain text file with regressors.
+          </p>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">4</div>
+            <h2>Why remove the header?</h2>
+          </div>
+
+          <p>
+            The original fMRIPrep file has column names in the first row.
+          </p>
+
+          <p>
+            For FEAT, the confound file should contain only numbers.
+          </p>
+
+          <p>
+            Each column becomes one nuisance regressor in the model.
+          </p>
+
+        </article>
+
+      </section>
+
+
+      <div class="step-progress">
+        <a href="step1.html">1</a>
+        <span></span>
+        <a href="step10.html">10</a>
+        <span></span>
+        <a href="step11.html"class="active">11</a>
+        <span></span>
+	<a href="step12.html">12</a>
+        <span></span>
+        <a href="step16.html">16</a>
+      </div>
+
+      <div class="step-page-nav">
+        <a class="step-nav-btn secondary" href="step10.html">← Previous Step</a>
+        <a class="step-nav-btn primary" href="step12.html">Next Step →</a>
+      </div>
+
+    </section>
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 14 — Automate the pipeline</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="topbar">
+    <div class="brand">
+      <div class="brand-icon">&gt;_</div>
+      <a href="index.html" class="brand-name">fMRI Tutorial</a>
+    </div>
+
+    <div class="topnav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#tutorial-overview">Steps</a>
+      <a href="step1.html">Start</a>
+    </div>
+  </nav>
+
+  <main class="step-layout">
+
+<aside class="step-sidebar">
+  <h3>Tutorial steps</h3>
+
+  <a href="step1.html"><span>1</span> Understand the experiment</a>
+  <a href="step2.html"><span>2</span> fMRI and BOLD basics</a>
+  <a href="step3.html"><span>3</span> Ubuntu and terminal basics</a>
+  <a href="step4.html"><span>4</span> Understand BIDS</a>
+  <a href="step5.html"><span>5</span> Download the dataset</a>
+  <a href="step6.html"><span>6</span> Run fMRIPrep</a>
+  <a href="step7.html"><span>7</span> Identify subject files</a>
+  <a href="step8.html"><span>8</span> Inspect events.tsv</a>
+  <a href="step9.html"><span>9</span> Create EV files</a>
+  <a href="step10.html"><span>10</span> Inspect confounds.tsv</a>
+  <a href="step11.html"><span>11</span> Prepare confounds for FEAT</a>
+  <a href="step12.html"><span>12</span> Run FEAT</a>
+  <a href="step13.html"><span>13</span> View FEAT outputs</a>
+  <a href="step14.html" class="current"><span>14</span> Automate the pipeline</a>
+  <a href="step15.html"><span>15</span> Group analysis</a>
+  <a href="step16.html"><span>16</span> Interpret results</a>
+</aside>
+
+    <section class="step-main">
+
+      <section class="step10-hero">
+        <div>
+          <a class="step-back-link" href="index.html#tutorial-overview">← Back to steps</a>
+
+          <h1>Step 14 — Automate the pipeline</h1>
+
+          <p>
+            We have now analysed one subject manually. In this step, we create a Bash script that repeats the same workflow automatically for any subject.
+          </p>
+        </div>
+
+        <div class="step10-hero-image">
+          <img src="image/automate-pipeline.png" alt="Automation of the FEAT pipeline">
+        </div>
+      </section>
+
+      <section class="step10-stack">
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">1</div>
+            <h2>Why automate the pipeline?</h2>
+          </div>
+
+          <p>
+            Running FEAT manually is useful when learning the workflow.
+          </p>
+
+          <p>
+            But once the analysis works for one subject, we do not want to repeat every step manually for every participant.
+          </p>
+
+          <p>
+            Automation allows us to run the same analysis in the same way for each subject.
+          </p>
+
+          <div class="feat-input-box">
+            <strong>We first understand the workflow manually, then we automate it.</strong>
+          </div>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">2</div>
+            <h2>Create the script file</h2>
+          </div>
+
+          <p>
+            Go to the scripts folder:
+          </p>
+
+          <pre><code>cd ~/fMRI_tutorial_project/scripts</code></pre>
+
+          <p>
+            Create a new Bash script:
+          </p>
+
+          <pre><code>vim run_one_subject.sh</code></pre>
+
+          <p>
+            Then paste the complete script below into Vim.
+          </p>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">3</div>
+            <h2>Copy the automation script</h2>
+          </div>
+
+          <p>
+            The complete Bash script is provided below.
+          </p>
+
+          <p>
+            Copy it, then paste it into the file you created:
+          </p>
+
+          <pre><code>~/fMRI_tutorial_project/scripts/run_one_subject.sh</code></pre>
+
+         <div class="feat-input-box">
+  <strong>
+    Open the script file, copy the entire script, then paste it into
+    <code>run_one_subject.sh</code>.
+  </strong>
+</div>
+
+<p style="text-align:center; margin-top:24px;">
+  <a class="step-nav-btn primary" href="scripts/run_one_subject.sh" target="_blank">
+    View the complete script →
+  </a>
+</p>
+
+	  </div>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">4</div>
+            <h2>Save and quit Vim</h2>
+          </div>
+
+          <p>
+            After pasting the script, save and quit Vim:
+          </p>
+
+          <pre><code>Esc
+:wq</code></pre>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">5</div>
+            <h2>Make the script executable</h2>
+          </div>
+
+          <p>
+            Run:
+          </p>
+
+          <pre><code>chmod u+x run_one_subject.sh</code></pre>
+
+          <p>
+            This allows Ubuntu to execute the file as a program.
+          </p>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">6</div>
+            <h2>Run the script for one subject</h2>
+          </div>
+
+          <p>
+            To prepare the files for subject 051 without launching FEAT:
+          </p>
+
+          <pre><code>./run_one_subject.sh 051</code></pre>
+
+          <p>
+            To prepare the files and launch FEAT:
+          </p>
+
+          <pre><code>./run_one_subject.sh 051 run</code></pre>
+
+          <p>
+            The word <code>run</code> tells the script to launch FEAT after preparing the files.
+          </p>
+
+          <div class="feat-input-box">
+            <strong>Expected result</strong>
+
+            <p>
+              If everything is correct, FEAT will automatically start and create a new
+              <code>.feat</code> output folder for the selected subject.
+            </p>
+          </div>
+        </article>
+
+        <article class="step3-card">
+          <div class="card-title-row">
+            <div class="card-icon">7</div>
+            <h2>What does the script do?</h2>
+          </div>
+
+          <div class="columns-grid">
+            <div>
+              <strong>Find BOLD</strong>
+              <span>Finds the preprocessed MNI BOLD image</span>
+            </div>
+
+            <div>
+              <strong>Find confounds</strong>
+              <span>Finds the fMRIPrep confounds TSV file</span>
+            </div>
+
+            <div>
+              <strong>Create confounds.txt</strong>
+              <span>Extracts selected nuisance regressors</span>
+            </div>
+
+            <div>
+              <strong>Create EV files</strong>
+              <span>Creates Right, Left and Both regressors</span>
+            </div>
+
+            <div>
+              <strong>Create FSF</strong>
+              <span>Adapts the FEAT template for the subject</span>
+            </div>
+
+            <div>
+              <strong>Run FEAT</strong>
+              <span>Launches the first-level analysis</span>
+            </div>
+          </div>
+        </article>
+<article class="step3-card">
+  <div class="card-title-row">
+    <div class="card-icon">8</div>
+    <h2>Run several subjects</h2>
+  </div>
+
+  <p>
+    Once the script works for one subject, use a loop to process multiple subjects automatically:
+  </p>
+
+  <pre><code>for sub in 001 003 004 007 008 009 011 012 015 016 017 018 019 021 024 025 030 033 034 037 038 039 046 047 050 051
+do
+    ./run_one_subject.sh $sub run
+done</code></pre>
+
+  <p>
+    The same workflow is automatically applied to every subject in the list.
+  </p>
+
+  <div class="feat-input-box">
+    <strong>Expected result</strong>
+
+    <p>
+      FEAT will automatically start for each subject, one after another. Depending on your computer, processing all participants may take a considerable amount of time.
+    </p>
+  </div>
+
+</article>
+
+
+<article class="step3-card">
+  <div class="card-title-row">
+    <div class="card-icon">9</div>
+    <h2>Check that the analysis completed successfully</h2>
+  </div>
+
+  <p>
+    First, go back to the project folder:
+  </p>
+
+  <pre><code>cd ~/fMRI_tutorial_project</code></pre>
+
+  <p>
+    Then check that each FEAT output folder was created correctly:
+  </p>
+
+  <pre><code>for sub in 001 003 004 007 008 009 011 012 015 016 017 018 019 021 024 025 030 033 034 037 038 039 046 047 050 051
+do
+    if [ -d righthanded/bids/derivatives/fsl_output/sub_${sub#0}/sub${sub}_right_left_confounds.feat ]; then
+        echo "✅ $sub OK"
+    else
+        echo "❌ $sub MISSING"
+    fi
+done</code></pre>
+
+  <p>
+    If everything worked correctly, you should obtain one <code>OK</code> line for each subject.
+  </p>
+
+  <pre><code>✅ 001 OK
+✅ 003 OK
+✅ 004 OK
+✅ 007 OK
+✅ 008 OK
+✅ 009 OK
+✅ 011 OK
+...
+✅ 051 OK</code></pre>
+
+  <div class="feat-input-box">
+    <strong>What does this mean?</strong>
+
+    <p>
+      An <strong>OK</strong> message means that the FEAT output folder exists for that subject.
+      If you see <strong>MISSING</strong>, that subject should be checked before continuing.
+    </p>
+  </div>
+</article>
+
+      </section>
+
+      <div class="step-progress">
+        <a href="step1.html">1</a>
+        <span></span>
+        <a href="step13.html">13</a>
+        <span></span>
+        <a href="step14.html" class="active">14</a>
+        <span></span>
+        <a href="step15.html">15</a>
+        <span></span>
+        <a href="step16.html">16</a>
+      </div>
+
+      <div class="step-page-nav">
+        <a class="step-nav-btn secondary" href="step13.html">← Previous Step</a>
+        <a class="step-nav-btn primary" href="step15.html">Next Step →</a>
+      </div>
+
+    </section>
+  </main>
+
+</body>
+</html>
